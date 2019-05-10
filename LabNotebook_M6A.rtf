@@ -1,0 +1,214 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red38\green38\blue38;\red242\green242\blue242;}
+\margl1440\margr1440\vieww28600\viewh15600\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+-60C crush and soak\
+-Fragmenting tube\
+\
+\
+Current Plan:\
+\
+Look at m6A-seq and YTHDF1 PAR-CLIP overlaps\
+\
+Find peaks that do not overlap:\
+-Exist in m6A but are not in PAR-CLIP\
+-Most important, exist in PAR-CLIP but not in m6A-seq\
+8\
+Functionally categorize the genes\
+\
+Search for motifs\
+\
+Comparison of viral datasets\
+-motifs\
+-metagenes\
+-structure?\
+-m6A versus par-clip\
+\
+\
+
+\b patients + phenotypes
+\b0 \
+\
+Which phenotypes occur together in patients?\
+\
+Which patients have similar phenotypes?\
+\
+
+\b RNA binding proteins + targets
+\b0 \
+\
+Which targets occur together in RBPs?\
+\
+Which RBPs have similar targets?\
+\
+
+\b \
+Tests 04.08.19
+\b0 \
+\
+1. Merge all peaks from all 3 replicates. Merge all peaks from new m6A replicates. Overlap\
+-combine peaks from all replicates into single bed file in R\
+\
+>> bedtools sort -i ythdf2_allreps.bed > ythdf2_allreps_sorted.bed\
+>> bedtools merge -i ythdf2_allreps_sorted.bed > ythdf2_allreps_merged.bed\
+\
+# of peaks = 51050\
+\
+\
+2. Same as test 1, but use d -10 option\
+\
+>> bedtools merge -d 10 -i ythdf2_allreps_sorted.bed | uniq > ythdf2_allreps_merged.bed\
+\
+# of peaks = 44995\
+\
+3. Start with list that only has overlapping genes\
+\
+>> bedtools sort -i full_bygene.bed > full_bygene_sorted.bed\
+>> bedtools merge -i full_bygene_sorted.bed | uniq > full_bygene_merged.bed\
+\
+# of peaks: 35031\
+\
+\
+4. Same as 2, but use d -10 option\
+\
+# of peaks: 30157\
+\
+5. Try using bedtools multi inter. must first sort and merge starting replicate files\
+>> bedtools sort -i ythdf2_rep1_bygene.bed > rep1_bygene_sorted.bed\
+>> bedtools sort -i ythdf2_rep2_bygene.bed > rep2_bygene_sorted.bed\
+>> bedtools sort -i ythdf2_rep3_bygene.bed > rep3_bygene_sorted.bed\
+\
+>> bedtools merge -i rep1_bygene_sorted.bed | uniq > rep1_bygene_merged.bed\
+>> bedtools merge -i rep2_bygene_sorted.bed | uniq > rep2_bygene_merged.bed\
+>> bedtools merge -i rep3_bygene_sorted.bed | uniq > rep3_bygene_merged.bed\
+\
+>> bedtools multiinter -i rep1_bygene_merged.bed rep2_bygene_merged.bed rep3_bygene_merged.bed | uniq > allreps_multiinter.bed\
+\
+# of peaks: 65081\
+\
+then merge again:\
+\
+>> bedtools merge -i allreps_multiinter.bed | uniq > test.bed\
+\
+
+\b # of peaks: 35031 same as test 3.\
+
+\b0 \
+6. Noticed that allreps_multiinter.bed has the number of files where the peak existed. checking in R:
+\f1\fs26 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\sl300\sa200\partightenfactor0
+
+\f0 \cf2 \cb1 	-Definition of columns:\
+\'93In the example below, the first three columns define the interval, the fourth column reports the number of files present at that interval, the fifth column reports a comma-separated list of files present at that interval, and the 6th through 8th columns report whether (1) or not (0) each file is present. The order is the same as on the command line.:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 \kerning1\expnd0\expndtw0  - select peaks that exist in at least 2 replicates\
+ - Use bedtools merge:\
+>> bedtools merge -i 2reps_multiinter.bed | uniq > test.bed\
+\
+# of peaks: 13537\
+\
+ - Use d -10 option:\
+\
+# of peaks: 11184\
+\
+ - Played with distance option, got a number 
+\b very close to number from paper.
+\b0 \
+\
+>> bedtools merge -d 3 -i 2reps_multiinter.bed | uniq > test.bed\
+>> wc -l test.bed\
+   12468 test.bed\
+\
+\
+
+\b Summary of operations:\
+\
+1. In R, filter each bed file for genes only in all replicates\
+\
+2. Sort the bed file for each replicate\
+\
+3. Merge the bed file for each replicate\
+\
+4. Use multi inter command to calculate intersections between all replicates\
+\
+5. In R, filter for peaks that occur in at least 2 replicates\
+\
+6. Merge the resulting bed file using the -d 3 option\
+\
+7. Result in 12468 unique peaks\
+\
+\
+Next steps for 4.16.19:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\b0 \cf0 \strike \strikec0  - Get m6A peaks to approximately 15000
+\b \strike0\striked0 \
+
+\b0 \strike \strikec0  - Overlaps
+\b \strike0\striked0 \
+ - GO analysis\
+ - Motif finding\
+ - Metagene analysis\
+\
+\
+4.16.18\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\b0 \cf0  - Combine m6A peaks from C-New\
+ - Use the simplified steps as in the YTHDF2 replicates:\
+	- Combine C_new 2 replicates into one file\
+	- Sort\
+	- Merge using d -3 option\
+ # of peaks:   1676\
+\
+ - Change peak locations to HG19 using UCSC liftover tool\
+\
+ - overlaps\
+
+\i Step 1: Intersect to find overlapping peaks from ythdf2 angle\
+    7720 ythdf2_venncenter.bed\
+\
+Step 2: Intersect to find overlapping peaks from m6a angle\
+    2496 m6a_venncenter.bed\
+\
+Step 3: Intersect to find exclusive peaks from ythdf2 angle\
+    4748 ythdf2_vennexclusive.bed\
+\
+Step 4: Intersect to find exclusive peaks from m6a angle\
+    9160 m6a_vennexclusive.bed\
+\
+ 
+\i0  - GO analysis of ythdf2_vennexclusive\
+	- Use UCSC Data integrator\
+	- Upload ythdf2_vennexclusvie as custom track\
+	- integrate with NCBI refseq genes\
+	- Output as ythdf2_exclusive_NCBIrefseq_041619\
+ - Explore in R\
+\
+ - Turn all venn diagram components into named files for GO (follow YTHDF2_exclusive protocol)\
+\
+ - Find gene location annotations using bedrolls intersect and hg19_gtf on big computer\
+\
+command: bedtools intersect -wb -f 0.50 -a m6A_venncenter.bed -b hg19_gtf.bed > m6A_center_named.bed\
+\
+End of day: got GTF annotations, but may not be specific enough. trying to see what info I can get out of column X13\
+\
+\
+\
+
+\b \
+\
+\
+
+\b0 \
+\
+\
+\
+\
+}
