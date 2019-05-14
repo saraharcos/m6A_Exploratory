@@ -16,17 +16,21 @@ bedtools merge -i rep1_bygene_sorted.bed | uniq > rep1_bygene_merged.bed
 bedtools merge -i rep2_bygene_sorted.bed | uniq > rep2_bygene_merged.bed
 bedtools merge -i rep3_bygene_sorted.bed | uniq > rep3_bygene_merged.bed
 
-echo "Step 3: use multiinter command to calculate peak intersections"
+echo "Step 3: use intersect commands to calculate peak intersections"
 
-bedtools multiinter -i rep1_bygene_merged.bed rep2_bygene_merged.bed rep3_bygene_merged.bed | uniq > allreps_multiinter.bed
+bedtools intersect -a rep1_bygene_merged.bed -b rep2_bygene_merged.bed rep3_bygene_merged.bed -u | uniq > rep1_intersected.bed
+bedtools intersect -a rep2_bygene_merged.bed -b rep1_bygene_merged.bed rep3_bygene_merged.bed -u | uniq > rep2_intersected.bed
+bedtools intersect -a rep3_bygene_merged.bed -b rep1_bygene_merged.bed rep2_bygene_merged.bed -u | uniq > rep3_intersected.bed
 
-echo "Step 4: use R to filter for peaks present in at least two replicates"
 
-Rscript filter_multiinter.r
+
+echo "Step 4: Concatenate files and sort"
+
+cat *intersected.bed | bedtools sort > allreps_intersected.bed
 
 echo "Step 5: merge the resulting peaks using d -3 option"
 
-bedtools merge -d 3 -i 2reps_multiinter.bed | uniq > Peak\ files/ythdf2_peaks_final.bed
+bedtools merge -i allreps_intersected.bed | uniq > Peak\ files/ythdf2_peaks_final.bed
 
 echo "Final number of peaks:"
 
@@ -42,5 +46,8 @@ rm rep1_bygene_merged.bed
 rm rep2_bygene_merged.bed
 rm rep3_bygene_merged.bed
 
-rm allreps_multiinter.bed
-rm 2reps_multiinter.bed
+rm rep1_intersected.bed
+rm rep2_intersected.bed
+rm rep3_intersected.bed
+
+rm allreps_intersected.bed
