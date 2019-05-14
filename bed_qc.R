@@ -84,3 +84,26 @@ print(paste("Max interval size of df2 peaks: ", max(df2_peaks$region_length)))
 #SOLVED!
 
 
+#PS: double checking interval length in m6A peak file
+
+m6A_peaks <- read_tsv(here("Peak files", "m6A_hg19_new_041619.bed"), col_names = FALSE) %>%
+  mutate(region_length = X3 - X2)
+
+print(paste("Min interval size of m6A peaks: ", min(m6A_peaks$region_length)))
+print(paste("Max interval size of m6A peaks: ", max(m6A_peaks$region_length)))
+
+#And double checking the df2 overlaps with m6A
+
+df2_m6a <- read_tsv(here("Overlap beds", "ythdf2_venncenter.bed"), col_names = FALSE) %>%
+  mutate(region_length = X3 - X2)
+
+print(paste("Min interval size of df2/m6A peaks: ", min(df2_m6a$region_length)))
+print(paste("Max interval size of df2/m6A peaks: ", max(df2_m6a$region_length)))
+
+df2_only <- read_tsv(here("Overlap beds", "ythdf2_vennexclusive.bed"), col_names = FALSE) %>%
+  mutate(region_length = X3 - X2)
+
+print(paste("Min interval size of df2 only peaks: ", min(df2_only$region_length)))
+print(paste("Max interval size of df2 only peaks: ", max(df2_only$region_length)))
+
+#YAY
