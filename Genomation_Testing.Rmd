@@ -31,17 +31,22 @@ head(m6A_peaks)
 ```{r}
 gff.file = system.file("extdata/chr21.refseq.hg19.gtf", package = "genomation")
 
-exons = gffToGRanges(gff.file, filter = "CDS")
-IRanges::start(exons[334]) <- 26958066
-IRanges::end(exons[334]) <- 26958166
-exons[which(IRanges::width(exons) ==1)]
-sm = ScoreMatrixBin(target = m6A_peaks, windows = exons, bin.num = 50)
+CDSs = gffToGRanges(gff.file)
+unique(CDSs$type)
+exons = gffToGRanges(gff.file, filter = "exon")
+
+IRanges::start(CDSs[334]) <- 26958066
+IRanges::end(CDSs[334]) <- 26958166
+CDSs[which(IRanges::width(CDSs) ==1)]
+sm = ScoreMatrixBin(target = m6A_peaks, windows = CDSs, bin.num = 50)
 sm
 ```
 
 ##Visualization test
 ```{r}
-heatMatrix(sm, xcoords = c(-1000, 1000))
+heatMatrix(sm, xcoords = c(-500, 500))
+plotMeta(sm, xcoords = c(-500, 500))
 plotMeta(sm, xcoords = c(-1000, 1000))
+heatMeta(sm)
 ```
 
