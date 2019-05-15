@@ -1,0 +1,47 @@
+---
+title: "Genomation_Testing"
+author: "Sarah Arcos"
+date: "May 15, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##Install Genomation
+```{r}
+#BiocManager::install('genomationData')
+#BiocManager::install('genomation')
+
+library(genomation)
+library(tidyverse)
+library(here)
+```
+
+##Read in m6A peaks file
+
+```{r}
+m6A_peaks <- readGeneric(here("Peak files", "m6A_hg19_new_041619.bed"), header = FALSE)
+head(m6A_peaks)
+```
+
+##Test scoring over exons
+
+```{r}
+gff.file = system.file("extdata/chr21.refseq.hg19.gtf", package = "genomation")
+
+exons = gffToGRanges(gff.file, filter = "CDS")
+IRanges::start(exons[334]) <- 26958066
+IRanges::end(exons[334]) <- 26958166
+exons[which(IRanges::width(exons) ==1)]
+sm = ScoreMatrixBin(target = m6A_peaks, windows = exons, bin.num = 50)
+sm
+```
+
+##Visualization test
+```{r}
+heatMatrix(sm, xcoords = c(-1000, 1000))
+plotMeta(sm, xcoords = c(-1000, 1000))
+```
+
