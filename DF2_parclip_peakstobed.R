@@ -12,40 +12,52 @@ library(readxl)
 library(here)
 
 ythdf2_1 <- read_xlsx(here("Input" ,"GSE49339_A-PARCLIP YTHDF2.xlsx"), 1) %>%
-  select("Gene symbol", starts_with("Chromosome"), starts_with("Cluster")) %>%
+  select("Gene symbol", starts_with("Chromosome"), starts_with("Cluster"), starts_with("Peak mutation")) %>%
   gather("Observation", "Value", -"Gene symbol") %>%
   na.omit() %>%
+  mutate(Observation = gsub(" ", "", Observation)) %>%
+  extract(col = Observation, into = c("Data_type", "Observation_num"), regex = "([a-zA-Z]+).{3}([0-9]*)") %>%
+  mutate(Observation_num = case_when(
+          Data_type == "ClusterStart" ~ as.numeric(Observation_num) -1,
+          Data_type == "ClusterEnd" ~ as.numeric(Observation_num) -2,
+          Data_type == "Peakmutation" ~ as.numeric(Observation_num) -4,
+          TRUE ~ as.numeric(Observation_num))) %>%
+  spread(Data_type, Value) %>%
+  mutate(Peakmutation = as.numeric(Peakmutation)) %>%
+  mutate(Chromosome = str_replace(Chromosome, "CHR", "chr")) %>%
+  filter(Peakmutation > 1)
+
+ythdf2_2 <- read_xlsx(here("Input" ,"GSE49339_A-PARCLIP YTHDF2.xlsx"), 2) %>%
+  select("Gene symbol", starts_with("Chromosome"), starts_with("Cluster"), starts_with("Peak mutation")) %>%
+  gather("Observation", "Value", -"Gene symbol") %>%
+  na.omit() %>%
+  mutate(Observation = gsub(" ", "", Observation)) %>%
   extract(col = Observation, into = c("Data_type", "Observation_num"), regex = "([a-zA-Z]+).{3}([0-9]*)") %>%
   mutate(Observation_num = case_when(
     Data_type == "ClusterStart" ~ as.numeric(Observation_num) -1,
     Data_type == "ClusterEnd" ~ as.numeric(Observation_num) -2,
+    Data_type == "Peakmutation" ~ as.numeric(Observation_num) -4,
     TRUE ~ as.numeric(Observation_num))) %>%
   spread(Data_type, Value) %>%
-  mutate(Chromosome = str_replace(Chromosome, "CHR", "chr"))
-
-ythdf2_2 <- read_xlsx(here("Input" ,"GSE49339_A-PARCLIP YTHDF2.xlsx"), 2) %>%
-  select("Gene symbol", starts_with("Chromosome"), starts_with("Cluster")) %>%
-  gather("Observation", "Value", -"Gene symbol") %>%
-  na.omit() %>%
-  extract(col = Observation, into = c("Data_type", "Observation_num"), regex = "([a-zA-Z]+).{3}([0-9]*)") %>%
-  mutate(Observation_num = case_when(
-    Data_type == "ClusterStart" ~ as.numeric(Observation_num) - 1,
-    Data_type == "ClusterEnd" ~ as.numeric(Observation_num) -2,
-    TRUE ~ as.numeric(Observation_num))) %>%
-  spread(Data_type, Value) %>%
-  mutate(Chromosome = str_replace(Chromosome, "CHR", "chr"))
+  mutate(Peakmutation = as.numeric(Peakmutation)) %>%
+  mutate(Chromosome = str_replace(Chromosome, "CHR", "chr")) %>%
+  filter(Peakmutation > 1)
 
 ythdf2_3 <- read_xlsx(here("Input" ,"GSE49339_A-PARCLIP YTHDF2.xlsx"), 3) %>%
-  select("Gene symbol", starts_with("Chromosome"), starts_with("Cluster")) %>%
+  select("Gene symbol", starts_with("Chromosome"), starts_with("Cluster"), starts_with("Peak mutation")) %>%
   gather("Observation", "Value", -"Gene symbol") %>%
   na.omit() %>%
+  mutate(Observation = gsub(" ", "", Observation)) %>%
   extract(col = Observation, into = c("Data_type", "Observation_num"), regex = "([a-zA-Z]+).{3}([0-9]*)") %>%
   mutate(Observation_num = case_when(
-    Data_type == "ClusterStart" ~ as.numeric(Observation_num) - 1,
+    Data_type == "ClusterStart" ~ as.numeric(Observation_num) -1,
     Data_type == "ClusterEnd" ~ as.numeric(Observation_num) -2,
+    Data_type == "Peakmutation" ~ as.numeric(Observation_num) -4,
     TRUE ~ as.numeric(Observation_num))) %>%
   spread(Data_type, Value) %>%
-  mutate(Chromosome = str_replace(Chromosome, "CHR", "chr"))
+  mutate(Peakmutation = as.numeric(Peakmutation)) %>%
+  mutate(Chromosome = str_replace(Chromosome, "CHR", "chr")) %>%
+  filter(Peakmutation > 1)
 
 #write to BED
 bed_write <- function(df, name){

@@ -2,7 +2,7 @@
 
 echo "Step 0: combine all m6A peaks into one bed file (C_new)"
 
-cat GSM1135032_C_new-1_thout_peaks.txt GSM1135033_C_new-2_thout_peaks.txt > m6A_combined.bed
+cat Source\ files/GSM1135032_C_new-1_thout_peaks.txt Source\ files/GSM1135033_C_new-2_thout_peaks.txt > m6A_combined.bed
 
 echo ""
 echo "Step 1: sort the combined bed file"
@@ -32,3 +32,30 @@ echo "https://genome.ucsc.edu/cgi-bin/hgLiftOver"
 
 echo "Use options: human, original assembly hg18, new assembly hg19, default for remaining options."
 echo "File naming conventions: m6A_hg19_{date}.bed:"
+
+echo ""
+echo "Alternate pathway: intersect the two replicates, then combine for final peaks"
+
+bedtools sort -i Source\ files/GSM1135032_C_new-1_thout_peaks.txt > m6A_rep1_sorted.bed
+bedtools sort -i Source\ files/GSM1135033_C_new-2_thout_peaks.txt > m6A_rep2_sorted.bed
+
+bedtools intersect -a m6A_rep1_sorted.bed -b m6A_rep2_sorted.bed -u | uniq > m6A_rep1_intersected.bed
+bedtools intersect -a m6A_rep2_sorted.bed -b m6A_rep1_sorted.bed -u | uniq > m6A_rep2_intersected.bed
+
+cat m6A*intersected.bed | bedtools sort | bedtools merge | uniq > m6A_new_final.bed
+
+wc -l m6A_new_final.bed
+
+cat m6A*intersected.bed | uniq > tester.bed
+
+wc -l tester.bed
+
+echo "Cleaning up intermediate files"
+
+rm m6A_rep1_sorted.bed
+rm m6A_rep2_sorted.bed
+rm m6A_rep1_intersected.bed
+rm m6A_rep2_intersected.bed
+
+
+

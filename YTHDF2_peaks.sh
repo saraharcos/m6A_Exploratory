@@ -12,15 +12,15 @@ bedtools sort -i Pre-processing\ beds/ythdf2_rep3_bygene.bed > rep3_bygene_sorte
 
 echo "Step 2: merge the bed files for each replicate"
 
-bedtools merge -i rep1_bygene_sorted.bed | uniq > rep1_bygene_merged.bed
-bedtools merge -i rep2_bygene_sorted.bed | uniq > rep2_bygene_merged.bed
-bedtools merge -i rep3_bygene_sorted.bed | uniq > rep3_bygene_merged.bed
+#bedtools merge -i rep1_bygene_sorted.bed | uniq > rep1_bygene_merged.bed
+#bedtools merge -i rep2_bygene_sorted.bed | uniq > rep2_bygene_merged.bed
+#bedtools merge -i rep3_bygene_sorted.bed | uniq > rep3_bygene_merged.bed
 
 echo "Step 3: use intersect commands to calculate peak intersections"
 
-bedtools intersect -a rep1_bygene_merged.bed -b rep2_bygene_merged.bed rep3_bygene_merged.bed -u | uniq > rep1_intersected.bed
-bedtools intersect -a rep2_bygene_merged.bed -b rep1_bygene_merged.bed rep3_bygene_merged.bed -u | uniq > rep2_intersected.bed
-bedtools intersect -a rep3_bygene_merged.bed -b rep1_bygene_merged.bed rep2_bygene_merged.bed -u | uniq > rep3_intersected.bed
+bedtools intersect -a rep1_bygene_sorted.bed -b rep2_bygene_sorted.bed rep3_bygene_sorted.bed -u | uniq > rep1_intersected.bed
+bedtools intersect -a rep2_bygene_sorted.bed -b rep1_bygene_sorted.bed rep3_bygene_sorted.bed -u | uniq > rep2_intersected.bed
+bedtools intersect -a rep3_bygene_sorted.bed -b rep1_bygene_sorted.bed rep2_bygene_sorted.bed -u | uniq > rep3_intersected.bed
 
 
 
@@ -28,11 +28,15 @@ echo "Step 4: Concatenate files and sort"
 
 cat *intersected.bed | bedtools sort > allreps_intersected.bed
 
-echo "Step 5: merge the resulting peaks using d -3 option"
+echo "Step 5: merge the resulting peaks option"
 
-bedtools merge -i allreps_intersected.bed | uniq > Peak\ files/ythdf2_peaks_final.bed
+#bedtools merge -i allreps_intersected.bed | uniq > Peak\ files/ythdf2_peaks_final.bed
 
 echo "Final number of peaks:"
+
+wc -l allreps_intersected.bed
+
+bedtools merge -i allreps_intersected.bed | uniq > Peak\ files/ythdf2_peaks_final.bed
 
 wc -l Peak\ files/ythdf2_peaks_final.bed
 
