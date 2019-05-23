@@ -69,8 +69,8 @@ bed_write <- function(df, name){
 }
 
 
-#bed_write(ythdf2_1, "ythdf2_rep1")
-#bed_write(ythdf2_2, "ythdf2_rep2")
+bed_write(ythdf2_1, "ythdf2_rep1")
+bed_write(ythdf2_2, "ythdf2_rep2")
 #bed_write(ythdf2_3, "ythdf2_rep3")
 
 
