@@ -5,7 +5,7 @@ echo ""
 Rscript DF2_parclip_peakstobed.R
 
 echo "Concatenate replicate 2 and 3 files, then use bedtools sort | bedtools merge | uniq > ythdf2_peaks_final.bed"
-cat Pre-processing\ beds/ythdf2_rep1.bed Pre-processing\ beds/ythdf2_rep2.bed | bedtools sort | bedtools merge | uniq > Peak\ files/ythdf2_peaks_final.bed
+cat Pre-processing\ beds/ythdf2_rep1.bed Pre-processing\ beds/ythdf2_rep2.bed Pre-processing\ beds/ythdf2_rep3.bed | bedtools sort | bedtools merge -s -c 1,4,5,6 -o count,distinct,mean,distinct | uniq > Peak\ files/ythdf2_peaks_final.bed
 
 echo ""
 echo "Final number of peaks:"
