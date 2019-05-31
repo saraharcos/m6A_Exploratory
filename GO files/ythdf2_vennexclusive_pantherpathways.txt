@@ -1,0 +1,25 @@
+
+
+
+
+
+Analysis Type:	PANTHER Overrepresentation Test (Released 20190517)
+Annotation Version and Release Date:	PANTHER version 14.1 Released 2019-03-12
+Analyzed List:	ythdf2_vennexclusive_genenames.bed (Homo sapiens)	There are duplicate IDs in the file. The unique set of IDs will be used.
+Reference List:	Homo sapiens (all genes in database)
+Test Type:	FISHER
+Correction:	FDR
+PANTHER Pathways	Homo sapiens - REFLIST (20996)	ythdf2_vennexclusive_genenames.bed (2349)	ythdf2_vennexclusive_genenames.bed (expected)	ythdf2_vennexclusive_genenames.bed (over/under)	ythdf2_vennexclusive_genenames.bed (fold Enrichment)	ythdf2_vennexclusive_genenames.bed (raw P-value)	ythdf2_vennexclusive_genenames.bed (FDR)
+Unclassified (UNCLASSIFIED)	18383	1939	2056.66	-	.94	4.21E-11	6.90E-09
+Gonadotropin-releasing hormone receptor pathway (P06664)	297	72	33.23	+	2.17	3.82E-08	3.13E-06
+Ubiquitin proteasome pathway (P00060)	64	24	7.16	+	3.35	4.07E-06	2.22E-04
+Integrin signalling pathway (P00034)	197	44	22.04	+	2.00	9.01E-05	2.95E-03
+CCKR signaling map (P06959)	257	54	28.75	+	1.88	8.36E-05	3.43E-03
+Huntington disease (P00029)	165	36	18.46	+	1.95	5.70E-04	1.34E-02
+p53 pathway (P00059)	106	26	11.86	+	2.19	7.25E-04	1.49E-02
+Parkinson disease (P00049)	103	26	11.52	+	2.26	5.65E-04	1.54E-02
+FGF signaling pathway (P00021)	120	28	13.43	+	2.09	9.04E-04	1.65E-02
+Wnt signaling pathway (P00057)	318	57	35.58	+	1.60	1.73E-03	2.83E-02
+p53 pathway feedback loops 2 (P04398)	62	17	6.94	+	2.45	2.16E-03	3.22E-02
+Apoptosis signaling pathway (P00006)	122	27	13.65	+	1.98	2.37E-03	3.24E-02
+Cell cycle (P00013)	22	9	2.46	+	3.66	2.69E-03	3.39E-02

@@ -1,0 +1,67 @@
+
+
+
+
+
+Analysis Type:	PANTHER Overrepresentation Test (Released 20190517)
+Annotation Version and Release Date:	PANTHER version 14.1 Released 2019-03-12
+Analyzed List:	ythdf2_venncenter_genenames.bed (Homo sapiens)	There are duplicate IDs in the file. The unique set of IDs will be used.
+Reference List:	Homo sapiens (all genes in database)
+Test Type:	FISHER
+Correction:	FDR
+PANTHER GO-Slim Molecular Function	Homo sapiens - REFLIST (20996)	ythdf2_venncenter_genenames.bed (3088)	ythdf2_venncenter_genenames.bed (expected)	ythdf2_venncenter_genenames.bed (over/under)	ythdf2_venncenter_genenames.bed (fold Enrichment)	ythdf2_venncenter_genenames.bed (raw P-value)	ythdf2_venncenter_genenames.bed (FDR)
+transcription regulator activity (GO:0140110)	925	249	136.04	+	1.83	2.07E-16	1.05E-13
+DNA-binding transcription factor activity (GO:0003700)	789	215	116.04	+	1.85	1.01E-14	2.54E-12
+G-protein coupled receptor activity (GO:0004930)	666	32	97.95	-	.33	1.53E-13	2.57E-11
+transmembrane signaling receptor activity (GO:0004888)	898	56	132.07	-	.42	1.03E-12	1.30E-10
+signaling receptor activity (GO:0038023)	1148	84	168.84	-	.50	3.65E-12	3.68E-10
+transferase activity (GO:0016740)	1649	357	242.53	+	1.47	2.93E-11	2.46E-09
+transcription regulatory region DNA binding (GO:0044212)	395	117	58.09	+	2.01	3.08E-10	2.22E-08
+molecular transducer activity (GO:0060089)	1223	101	179.87	-	.56	7.44E-10	4.70E-08
+DNA binding (GO:0003677)	996	230	146.49	+	1.57	1.58E-09	8.88E-08
+nucleic acid binding (GO:0003676)	1649	345	242.53	+	1.42	2.00E-09	1.01E-07
+RNA polymerase II transcription factor activity, sequence-specific DNA binding (GO:0000981)	287	89	42.21	+	2.11	8.34E-09	3.83E-07
+heterocyclic compound binding (GO:1901363)	1738	349	255.62	+	1.37	7.07E-08	2.98E-06
+transcription regulatory region sequence-specific DNA binding (GO:0000976)	332	94	48.83	+	1.93	1.03E-07	3.99E-06
+phosphotransferase activity, alcohol group as acceptor (GO:0016773)	631	152	92.80	+	1.64	1.17E-07	4.20E-06
+transferase activity, transferring phosphorus-containing groups (GO:0016772)	796	182	117.07	+	1.55	1.54E-07	5.19E-06
+transcription coregulator activity (GO:0003712)	209	62	30.74	+	2.02	5.70E-06	1.69E-04
+protein kinase activity (GO:0004672)	540	126	79.42	+	1.59	5.57E-06	1.76E-04
+neurotransmitter receptor activity (GO:0030594)	107	1	15.74	-	.06	9.17E-06	2.57E-04
+extracellular ligand-gated ion channel activity (GO:0005230)	85	0	12.50	-	 < 0.01	1.27E-05	3.38E-04
+catalytic activity (GO:0003824)	4490	764	660.37	+	1.16	3.24E-05	8.19E-04
+RNA polymerase II regulatory region sequence-specific DNA binding (GO:0000977)	181	52	26.62	+	1.95	6.69E-05	1.61E-03
+receptor regulator activity (GO:0030545)	305	20	44.86	-	.45	1.11E-04	2.54E-03
+protein serine/threonine kinase activity (GO:0004674)	368	87	54.12	+	1.61	1.22E-04	2.68E-03
+cation binding (GO:0043169)	371	27	54.57	-	.49	1.42E-04	3.00E-03
+transcription corepressor activity (GO:0003714)	70	26	10.30	+	2.53	1.64E-04	3.19E-03
+ion binding (GO:0043167)	539	46	79.27	-	.58	1.62E-04	3.28E-03
+neurotransmitter binding (GO:0042165)	97	2	14.27	-	.14	2.38E-04	4.46E-03
+transcription factor binding (GO:0008134)	193	51	28.39	+	1.80	3.46E-04	6.24E-03
+structural molecule activity (GO:0005198)	495	43	72.80	-	.59	4.13E-04	7.20E-03
+signaling receptor binding (GO:0005102)	674	65	99.13	-	.66	6.33E-04	1.07E-02
+receptor ligand activity (GO:0048018)	278	20	40.89	-	.49	8.66E-04	1.41E-02
+metal ion binding (GO:0046872)	302	23	44.42	-	.52	1.07E-03	1.70E-02
+channel activity (GO:0015267)	174	10	25.59	-	.39	1.26E-03	1.77E-02
+passive transmembrane transporter activity (GO:0022803)	174	10	25.59	-	.39	1.26E-03	1.82E-02
+oxidoreductase activity (GO:0016491)	527	49	77.51	-	.63	1.26E-03	1.87E-02
+peptidase regulator activity (GO:0061134)	123	5	18.09	-	.28	1.24E-03	1.90E-02
+peptidase inhibitor activity (GO:0030414)	117	5	17.21	-	.29	1.67E-03	2.28E-02
+gated channel activity (GO:0022836)	160	9	23.53	-	.38	1.74E-03	2.31E-02
+drug binding (GO:0008144)	92	3	13.53	-	.22	1.92E-03	2.48E-02
+transferase activity, transferring glycosyl groups (GO:0016757)	173	44	25.44	+	1.73	2.04E-03	2.58E-02
+ligand-gated ion channel activity (GO:0015276)	125	6	18.38	-	.33	2.40E-03	2.82E-02
+ubiquitin-like protein transferase activity (GO:0019787)	307	69	45.15	+	1.53	2.32E-03	2.86E-02
+ligand-gated channel activity (GO:0022834)	125	6	18.38	-	.33	2.40E-03	2.88E-02
+enzyme binding (GO:0019899)	580	116	85.30	+	1.36	2.75E-03	3.15E-02
+Unclassified (UNCLASSIFIED)	11177	1557	1643.86	-	.95	3.55E-03	3.99E-02
+amino acid binding (GO:0016597)	62	1	9.12	-	.11	3.73E-03	4.10E-02
+Ras GTPase binding (GO:0017016)	129	34	18.97	+	1.79	4.38E-03	4.71E-02
+transcriptional repressor activity, RNA polymerase II transcription regulatory region sequence-specific DNA binding (GO:0001227)	22	10	3.24	+	3.09	5.24E-03	4.81E-02
+small GTPase binding (GO:0031267)	132	34	19.41	+	1.75	4.95E-03	4.81E-02
+ubiquitin-protein transferase activity (GO:0004842)	243	55	35.74	+	1.54	5.11E-03	4.87E-02
+catalytic activity, acting on a protein (GO:0140096)	172	42	25.30	+	1.66	5.23E-03	4.89E-02
+histone-lysine N-methyltransferase activity (GO:0018024)	11	7	1.62	+	4.33	4.95E-03	4.90E-02
+glutamate binding (GO:0016595)	43	0	6.32	-	 < 0.01	4.87E-03	4.92E-02
+glutamate receptor activity (GO:0008066)	43	0	6.32	-	 < 0.01	4.87E-03	5.02E-02
+GTPase activator activity (GO:0005096)	100	28	14.71	+	1.90	4.82E-03	5.07E-02

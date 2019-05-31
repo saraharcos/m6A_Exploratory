@@ -1,0 +1,87 @@
+
+
+
+
+
+Analysis Type:	PANTHER Overrepresentation Test (Released 20190517)
+Annotation Version and Release Date:	PANTHER version 14.1 Released 2019-03-12
+Analyzed List:	ythdf2_vennexclusive_genenames.bed (Homo sapiens)	There are duplicate IDs in the file. The unique set of IDs will be used.
+Reference List:	Homo sapiens (all genes in database)
+Test Type:	FISHER
+Correction:	FDR
+PANTHER GO-Slim Cellular Component	Homo sapiens - REFLIST (20996)	ythdf2_vennexclusive_genenames.bed (2349)	ythdf2_vennexclusive_genenames.bed (expected)	ythdf2_vennexclusive_genenames.bed (over/under)	ythdf2_vennexclusive_genenames.bed (fold Enrichment)	ythdf2_vennexclusive_genenames.bed (raw P-value)	ythdf2_vennexclusive_genenames.bed (FDR)
+intracellular part (GO:0044424)	3692	682	413.06	+	1.65	1.32E-37	5.94E-35
+cytoplasm (GO:0005737)	3488	646	390.23	+	1.66	1.61E-35	3.60E-33
+intracellular (GO:0005622)	4306	735	481.75	+	1.53	5.99E-31	8.94E-29
+cytoplasmic part (GO:0044444)	2165	424	242.22	+	1.75	3.26E-26	2.92E-24
+Unclassified (UNCLASSIFIED)	11742	1043	1313.68	-	.79	2.66E-26	2.98E-24
+organelle (GO:0043226)	3869	638	432.86	+	1.47	1.46E-22	1.09E-20
+cell (GO:0005623)	5486	829	613.77	+	1.35	2.54E-20	1.62E-18
+cell part (GO:0044464)	5462	825	611.08	+	1.35	3.57E-20	2.00E-18
+cytosol (GO:0005829)	692	171	77.42	+	2.21	2.15E-18	1.07E-16
+intracellular membrane-bounded organelle (GO:0043231)	2322	403	259.78	+	1.55	9.98E-17	4.47E-15
+intracellular organelle (GO:0043229)	2328	403	260.45	+	1.55	1.83E-16	7.44E-15
+nucleus (GO:0005634)	2197	384	245.80	+	1.56	2.56E-16	9.56E-15
+extracellular space (GO:0005615)	863	35	96.55	-	.36	3.21E-12	1.11E-10
+cytosolic part (GO:0044445)	151	54	16.89	+	3.20	2.34E-11	7.48E-10
+vacuole (GO:0005773)	1104	206	123.51	+	1.67	5.15E-11	1.54E-09
+extracellular region part (GO:0044421)	928	43	103.82	-	.41	6.30E-11	1.76E-09
+endomembrane system (GO:0012505)	691	144	77.31	+	1.86	7.98E-11	2.10E-09
+cytosolic ribosome (GO:0022626)	101	42	11.30	+	3.72	9.51E-11	2.37E-09
+nuclear part (GO:0044428)	810	158	90.62	+	1.74	7.34E-10	1.73E-08
+extracellular region (GO:0005576)	1033	56	115.57	-	.48	2.44E-09	5.21E-08
+ribonucleoprotein complex (GO:1990904)	233	65	26.07	+	2.49	2.37E-09	5.30E-08
+endoplasmic reticulum (GO:0005783)	253	59	28.31	+	2.08	2.42E-06	4.92E-05
+nuclear lumen (GO:0031981)	489	94	54.71	+	1.72	4.97E-06	9.69E-05
+coated vesicle (GO:0030135)	70	25	7.83	+	3.19	5.20E-06	9.71E-05
+membrane-bounded organelle (GO:0043227)	648	116	72.50	+	1.60	7.18E-06	1.29E-04
+cytosolic large ribosomal subunit (GO:0022625)	58	22	6.49	+	3.39	8.74E-06	1.51E-04
+cytosolic small ribosomal subunit (GO:0022627)	40	18	4.48	+	4.02	9.09E-06	1.51E-04
+proteasome complex (GO:0000502)	43	18	4.81	+	3.74	1.98E-05	3.16E-04
+COPII-coated ER to Golgi transport vesicle (GO:0030134)	44	18	4.92	+	3.66	2.52E-05	3.90E-04
+protein-containing complex (GO:0032991)	1555	229	173.97	+	1.32	8.29E-05	1.24E-03
+ribonucleoprotein granule (GO:0035770)	58	19	6.49	+	2.93	1.73E-04	2.42E-03
+cytoplasmic vesicle (GO:0031410)	160	37	17.90	+	2.07	1.85E-04	2.44E-03
+cytoplasmic ribonucleoprotein granule (GO:0036464)	58	19	6.49	+	2.93	1.73E-04	2.50E-03
+intracellular vesicle (GO:0097708)	160	37	17.90	+	2.07	1.85E-04	2.51E-03
+vesicle (GO:0031982)	210	45	23.49	+	1.92	2.09E-04	2.67E-03
+nuclear envelope (GO:0005635)	89	25	9.96	+	2.51	2.16E-04	2.69E-03
+plasma membrane (GO:0005886)	2134	297	238.75	+	1.24	2.76E-04	3.34E-03
+catalytic complex (GO:1902494)	323	61	36.14	+	1.69	3.08E-04	3.63E-03
+membrane part (GO:0044425)	1276	101	142.76	-	.71	3.69E-04	4.24E-03
+preribosome (GO:0030684)	79	22	8.84	+	2.49	4.03E-04	4.51E-03
+non-membrane-bounded organelle (GO:0043228)	1160	172	129.78	+	1.33	6.03E-04	6.28E-03
+intracellular non-membrane-bounded organelle (GO:0043232)	1160	172	129.78	+	1.33	6.03E-04	6.43E-03
+cell periphery (GO:0071944)	2170	298	242.78	+	1.23	5.93E-04	6.48E-03
+membrane (GO:0016020)	1297	105	145.11	-	.72	6.95E-04	7.07E-03
+proteasome regulatory particle (GO:0005838)	18	9	2.01	+	4.47	9.05E-04	8.81E-03
+proteasome accessory complex (GO:0022624)	18	9	2.01	+	4.47	9.05E-04	9.01E-03
+endoplasmic reticulum membrane (GO:0005789)	126	29	14.10	+	2.06	1.08E-03	1.03E-02
+ion channel complex (GO:0034702)	110	2	12.31	-	.16	1.31E-03	1.22E-02
+spliceosomal snRNP complex (GO:0097525)	75	20	8.39	+	2.38	1.56E-03	1.43E-02
+integral component of plasma membrane (GO:0005887)	733	54	82.01	-	.66	1.70E-03	1.49E-02
+small nuclear ribonucleoprotein complex (GO:0030532)	76	20	8.50	+	2.35	1.68E-03	1.50E-02
+organelle subcompartment (GO:0031984)	284	52	31.77	+	1.64	1.78E-03	1.50E-02
+nucleoplasm (GO:0005654)	284	52	31.77	+	1.64	1.78E-03	1.53E-02
+endoplasmic reticulum subcompartment (GO:0098827)	131	29	14.66	+	1.98	2.09E-03	1.73E-02
+external side of plasma membrane (GO:0009897)	216	10	24.17	-	.41	2.58E-03	2.10E-02
+nuclear pore (GO:0005643)	58	16	6.49	+	2.47	2.85E-03	2.28E-02
+transcription factor complex (GO:0005667)	59	16	6.60	+	2.42	3.19E-03	2.51E-02
+nucleolar part (GO:0044452)	60	16	6.71	+	2.38	3.58E-03	2.77E-02
+proteasome regulatory particle, lid subcomplex (GO:0008541)	7	5	.78	+	6.38	4.44E-03	3.37E-02
+ER to Golgi transport vesicle membrane (GO:0012507)	15	7	1.68	+	4.17	4.52E-03	3.38E-02
+small nucleolar ribonucleoprotein complex (GO:0005732)	11	6	1.23	+	4.88	4.80E-03	3.41E-02
+catalytic step 2 spliceosome (GO:0071013)	40	12	4.48	+	2.68	4.72E-03	3.41E-02
+Prp19 complex (GO:0000974)	40	12	4.48	+	2.68	4.72E-03	3.47E-02
+oligosaccharyltransferase complex (GO:0008250)	4	4	.45	+	8.94	5.13E-03	3.59E-02
+U1 snRNP (GO:0005685)	25	9	2.80	+	3.22	5.31E-03	3.60E-02
+endoplasmic reticulum-Golgi intermediate compartment (GO:0005793)	25	9	2.80	+	3.22	5.31E-03	3.66E-02
+cation channel complex (GO:0034703)	94	2	10.52	-	.19	5.57E-03	3.73E-02
+Golgi apparatus (GO:0005794)	196	37	21.93	+	1.69	5.80E-03	3.82E-02
+intrinsic component of membrane (GO:0031224)	963	79	107.74	-	.73	6.07E-03	3.94E-02
+nucleolus (GO:0005730)	144	29	16.11	+	1.80	7.08E-03	4.53E-02
+chromosome (GO:0005694)	520	81	58.18	+	1.39	7.21E-03	4.55E-02
+U6 snRNP (GO:0005688)	27	9	3.02	+	2.98	7.93E-03	4.80E-02
+integral component of membrane (GO:0016021)	953	79	106.62	-	.74	8.05E-03	4.81E-02
+integral component of endoplasmic reticulum membrane (GO:0030176)	54	14	6.04	+	2.32	7.77E-03	4.83E-02
+Lsm2-8 complex (GO:0120115)	27	9	3.02	+	2.98	7.93E-03	4.87E-02

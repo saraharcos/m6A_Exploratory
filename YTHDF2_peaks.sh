@@ -7,10 +7,15 @@ Rscript DF2_parclip_peakstobed.R
 echo "Concatenate replicate 2 and 3 files, then use bedtools sort | bedtools merge | uniq > ythdf2_peaks_final.bed"
 cat Pre-processing\ beds/ythdf2_rep1.bed Pre-processing\ beds/ythdf2_rep2.bed Pre-processing\ beds/ythdf2_rep3.bed | bedtools sort | bedtools merge -s -c 1,4,5,6 -o count,distinct,mean,distinct | uniq > Peak\ files/ythdf2_peaks_final.bed
 
+echo "Use awk to select only peaks with count > 1"
+echo ""
+
+cat Peak\ files/ythdf2_peaks_final.bed | awk '{ if ($4 > 1) { print } }' Peak\ files/ythdf2_peaks_final.bed > Peak\ files/ythdf2_peaks_final2.bed
+
 echo ""
 echo "Final number of peaks:"
 
-wc -l Peak\ files/ythdf2_peaks_final.bed
+wc -l Peak\ files/ythdf2_peaks_final2.bed
 
 
 

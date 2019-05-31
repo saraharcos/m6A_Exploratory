@@ -1,0 +1,64 @@
+
+
+
+
+
+Analysis Type:	PANTHER Overrepresentation Test (Released 20190517)
+Annotation Version and Release Date:	PANTHER version 14.1 Released 2019-03-12
+Analyzed List:	ythdf2_vennexclusive_genenames.bed (Homo sapiens)	There are duplicate IDs in the file. The unique set of IDs will be used.
+Reference List:	Homo sapiens (all genes in database)
+Test Type:	FISHER
+Correction:	FDR
+PANTHER GO-Slim Molecular Function	Homo sapiens - REFLIST (20996)	ythdf2_vennexclusive_genenames.bed (2349)	ythdf2_vennexclusive_genenames.bed (expected)	ythdf2_vennexclusive_genenames.bed (over/under)	ythdf2_vennexclusive_genenames.bed (fold Enrichment)	ythdf2_vennexclusive_genenames.bed (raw P-value)	ythdf2_vennexclusive_genenames.bed (FDR)
+RNA binding (GO:0003723)	558	160	62.43	+	2.56	1.37E-22	6.92E-20
+Unclassified (UNCLASSIFIED)	11177	1012	1250.47	-	.81	1.14E-20	2.88E-18
+nucleic acid binding (GO:0003676)	1649	317	184.49	+	1.72	2.65E-18	4.46E-16
+heterocyclic compound binding (GO:1901363)	1738	325	194.44	+	1.67	2.86E-17	3.61E-15
+signaling receptor activity (GO:0038023)	1148	48	128.44	-	.37	2.31E-15	2.34E-13
+transmembrane signaling receptor activity (GO:0004888)	898	36	100.47	-	.36	7.23E-13	6.08E-11
+molecular transducer activity (GO:0060089)	1223	61	136.83	-	.45	1.56E-12	1.13E-10
+binding (GO:0005488)	5173	736	578.75	+	1.27	4.58E-12	2.89E-10
+G-protein coupled receptor activity (GO:0004930)	666	22	74.51	-	.30	7.46E-12	4.19E-10
+catalytic activity (GO:0003824)	4490	626	502.33	+	1.25	1.10E-08	5.55E-07
+mRNA binding (GO:0003729)	151	47	16.89	+	2.78	1.77E-08	8.12E-07
+structural constituent of ribosome (GO:0003735)	128	40	14.32	+	2.79	1.93E-07	8.12E-06
+structural molecule activity (GO:0005198)	495	99	55.38	+	1.79	5.22E-07	2.03E-05
+signaling receptor binding (GO:0005102)	674	35	75.41	-	.46	6.56E-07	2.21E-05
+transferase activity (GO:0016740)	1649	257	184.49	+	1.39	6.40E-07	2.31E-05
+cytokine activity (GO:0005125)	145	1	16.22	-	.06	5.57E-06	1.76E-04
+protein transporter activity (GO:0008565)	54	21	6.04	+	3.48	1.02E-05	3.04E-04
+translation initiation factor activity (GO:0003743)	38	17	4.25	+	4.00	1.70E-05	4.77E-04
+signal sequence binding (GO:0005048)	30	14	3.36	+	4.17	6.52E-05	1.73E-03
+receptor ligand activity (GO:0048018)	278	11	31.10	-	.35	1.07E-04	2.71E-03
+cytokine receptor binding (GO:0005126)	129	2	14.43	-	.14	2.03E-04	4.89E-03
+serine-type endopeptidase activity (GO:0004252)	105	1	11.75	-	.09	2.78E-04	6.10E-03
+transcription factor binding (GO:0008134)	193	42	21.59	+	1.95	2.69E-04	6.17E-03
+transferase activity, transferring phosphorus-containing groups (GO:0016772)	796	126	89.06	+	1.41	3.43E-04	6.67E-03
+phosphoprotein phosphatase activity (GO:0004721)	123	30	13.76	+	2.18	3.57E-04	6.67E-03
+nuclear localization sequence binding (GO:0008139)	23	11	2.57	+	4.27	3.33E-04	6.73E-03
+unfolded protein binding (GO:0051082)	64	20	7.16	+	2.79	3.32E-04	6.98E-03
+ubiquitin-like protein conjugating enzyme activity (GO:0061650)	100	26	11.19	+	2.32	4.69E-04	8.46E-03
+oligosaccharyl transferase activity (GO:0004576)	6	6	.67	+	8.94	5.57E-04	9.70E-03
+ribonucleotide binding (GO:0032553)	71	20	7.94	+	2.52	6.73E-04	1.13E-02
+phosphatase activity (GO:0016791)	200	41	22.38	+	1.83	7.70E-04	1.25E-02
+ribonucleoprotein complex binding (GO:0043021)	42	14	4.70	+	2.98	1.04E-03	1.64E-02
+ubiquitin protein ligase binding (GO:0031625)	34	12	3.80	+	3.15	1.57E-03	2.03E-02
+actin binding (GO:0003779)	148	32	16.56	+	1.93	1.62E-03	2.05E-02
+DNA binding (GO:0003677)	996	148	111.43	+	1.33	1.47E-03	2.06E-02
+translation regulator activity (GO:0045182)	39	13	4.36	+	2.98	1.55E-03	2.06E-02
+actin filament binding (GO:0051015)	65	18	7.27	+	2.48	1.46E-03	2.11E-02
+protein phosphatase binding (GO:0019903)	39	13	4.36	+	2.98	1.55E-03	2.12E-02
+purine ribonucleotide binding (GO:0032555)	65	18	7.27	+	2.48	1.46E-03	2.17E-02
+ATP binding (GO:0005524)	49	15	5.48	+	2.74	1.42E-03	2.18E-02
+ubiquitin-like protein transferase activity (GO:0019787)	307	55	34.35	+	1.60	1.95E-03	2.41E-02
+cytoskeletal protein binding (GO:0008092)	357	62	39.94	+	1.55	2.31E-03	2.77E-02
+pre-mRNA binding (GO:0036002)	13	7	1.45	+	4.81	2.46E-03	2.89E-02
+DNA binding, bending (GO:0008301)	57	16	6.38	+	2.51	2.55E-03	2.93E-02
+receptor regulator activity (GO:0030545)	305	17	34.12	-	.50	2.70E-03	3.03E-02
+ligase activity (GO:0016874)	232	43	25.96	+	1.66	3.32E-03	3.65E-02
+nucleotide binding (GO:0000166)	133	28	14.88	+	1.88	3.61E-03	3.88E-02
+protein-containing complex binding (GO:0044877)	165	33	18.46	+	1.79	4.03E-03	4.07E-02
+ubiquitin-like protein-specific protease activity (GO:0019783)	151	31	16.89	+	1.84	4.00E-03	4.13E-02
+phosphotransferase activity, alcohol group as acceptor (GO:0016773)	631	97	70.60	+	1.37	3.94E-03	4.15E-02
+single-stranded RNA binding (GO:0003727)	24	9	2.69	+	3.35	4.28E-03	4.24E-02
+snRNA binding (GO:0017069)	15	7	1.68	+	4.17	4.52E-03	4.39E-02

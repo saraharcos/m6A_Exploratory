@@ -1,0 +1,23 @@
+
+
+
+
+
+Analysis Type:	PANTHER Overrepresentation Test (Released 20190517)
+Annotation Version and Release Date:	PANTHER version 14.1 Released 2019-03-12
+Analyzed List:	ythdf2_venncenter_genenames.bed (Homo sapiens)	There are duplicate IDs in the file. The unique set of IDs will be used.
+Reference List:	Homo sapiens (all genes in database)
+Test Type:	FISHER
+Correction:	FDR
+PANTHER Pathways	Homo sapiens - REFLIST (20996)	ythdf2_venncenter_genenames.bed (3088)	ythdf2_venncenter_genenames.bed (expected)	ythdf2_venncenter_genenames.bed (over/under)	ythdf2_venncenter_genenames.bed (fold Enrichment)	ythdf2_venncenter_genenames.bed (raw P-value)	ythdf2_venncenter_genenames.bed (FDR)
+Alzheimer disease-presenilin pathway (P00004)	222	73	32.65	+	2.24	2.01E-08	3.30E-06
+Gonadotropin-releasing hormone receptor pathway (P06664)	297	81	43.68	+	1.85	2.67E-06	2.19E-04
+Heterotrimeric G-protein signaling pathway-Gq alpha and Go alpha mediated pathway (P00027)	153	4	22.50	-	.18	1.09E-05	5.97E-04
+Notch signaling pathway (P00045)	60	26	8.82	+	2.95	2.47E-05	1.01E-03
+p53 pathway (P00059)	106	36	15.59	+	2.31	4.33E-05	1.01E-03
+Angiogenesis (P00005)	182	53	26.77	+	1.98	3.20E-05	1.05E-03
+Insulin/IGF pathway-protein kinase B signaling cascade (P00033)	48	22	7.06	+	3.12	3.89E-05	1.06E-03
+PDGF signaling pathway (P00047)	151	45	22.21	+	2.03	9.05E-05	1.85E-03
+CCKR signaling map (P06959)	257	63	37.80	+	1.67	5.13E-04	9.35E-03
+TGF-beta signaling pathway (P00052)	116	33	17.06	+	1.93	1.86E-03	3.05E-02
+Ras Pathway (P04393)	74	23	10.88	+	2.11	3.27E-03	4.87E-02
