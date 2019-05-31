@@ -1,0 +1,130 @@
+---
+title: "GO analysis"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+library(tidyverse)
+library(here)
+```
+
+
+Graph
+- *Remove "Unclassified" annotation prior to ggplot
+```{r fig.width = 18, fig.height = 12}
+molec_center <- read_tsv(here("GO files", "ythdf2_venncenter_molecularfunction.txt"), skip = 11) %>%
+  select("GO type" = "PANTHER GO-Slim Molecular Function", 2:8) %>%
+  filter(`GO type` != "Unclassified (UNCLASSIFIED)") %>%
+  top_n(n = -10, wt = `ythdf2_venncenter_genenames.bed (FDR)`) %>%
+  mutate(`GO analysis` = "molecular function")
+
+
+biol_center <- read_tsv(here("GO files", "ythdf2_venncenter_biologicalprocess.txt"), skip = 11) %>%
+  select("GO type" = "PANTHER GO-Slim Biological Process", 2:8) %>%
+  filter(`GO type` != "Unclassified (UNCLASSIFIED)") %>%
+  top_n(n = -10, wt = `ythdf2_venncenter_genenames.bed (FDR)`) %>%
+  mutate(`GO analysis` = "biological process")
+
+
+comp_center <- read_tsv(here("GO files", "ythdf2_venncenter_cellularcomponent.txt"), skip = 11)  %>%
+  select("GO type" = "PANTHER GO-Slim Cellular Component", 2:8) %>%
+  filter(`GO type` != "Unclassified (UNCLASSIFIED)") %>%
+  top_n(n = -10, wt = `ythdf2_venncenter_genenames.bed (FDR)`) %>%
+  mutate(`GO analysis` = "cellular component")
+
+
+path_center <- read_tsv(here("GO files", "ythdf2_venncenter_pantherpathways.txt"), skip = 11) %>%
+  select("GO type" = "PANTHER Pathways", 2:8) %>%
+  filter(`GO type` != "Unclassified (UNCLASSIFIED)") %>%
+  top_n(n = -10, wt = `ythdf2_venncenter_genenames.bed (FDR)`) %>%
+  mutate(`GO analysis` = "panther pathways")
+
+molec_exclusive <- read_tsv(here("GO files", "ythdf2_vennexclusive_molecularfunction.txt"), skip = 11) %>%
+  select("GO type" = "PANTHER GO-Slim Molecular Function", 2:8) %>%
+  filter(`GO type` != "Unclassified (UNCLASSIFIED)") %>%
+  top_n(n = -10, wt = `ythdf2_vennexclusive_genenames.bed (FDR)`) %>%
+  mutate(`GO analysis` = "molecular function")
+
+
+biol_exclusive <- read_tsv(here("GO files", "ythdf2_vennexclusive_biologicalprocess.txt"), skip = 11) %>%
+  select("GO type" = "PANTHER GO-Slim Biological Process", 2:8) %>%
+  filter(`GO type` != "Unclassified (UNCLASSIFIED)") %>%
+  top_n(n = -10, wt = `ythdf2_vennexclusive_genenames.bed (FDR)`) %>%
+  mutate(`GO analysis` = "biological process")
+
+
+comp_exclusive <- read_tsv(here("GO files", "ythdf2_vennexclusive_cellularcomponent.txt"), skip = 11)  %>%
+  select("GO type" = "PANTHER GO-Slim Cellular Component", 2:8) %>%
+  filter(`GO type` != "Unclassified (UNCLASSIFIED)") %>%
+  top_n(n = -10, wt = `ythdf2_vennexclusive_genenames.bed (FDR)`) %>%
+  mutate(`GO analysis` = "cellular component")
+
+
+path_exclusive <- read_tsv(here("GO files", "ythdf2_vennexclusive_pantherpathways.txt"), skip = 11) %>%
+  select("GO type" = "PANTHER Pathways", 2:8) %>%
+  filter(`GO type` != "Unclassified (UNCLASSIFIED)") %>%
+  top_n(n = -10, wt = `ythdf2_vennexclusive_genenames.bed (FDR)`) %>%
+  mutate(`GO analysis` = "panther pathways")
+
+
+
+combined_go_center <- rbind(molec_center, biol_center, comp_center, path_center) %>%
+  mutate(`GO type` = gsub("\\(P[0-9]*\\)", "", `GO type`)) %>%
+  mutate(`GO type` = gsub("\\(GO:[0-9]*\\)", "", `GO type`)) %>%
+  arrange(`GO analysis`, desc(`ythdf2_venncenter_genenames.bed (fold Enrichment)`)) %>%
+  mutate(`GO type` = paste(`GO type`, "(Fold Enrich. =  ", `ythdf2_venncenter_genenames.bed (fold Enrichment)`, ")")) %>%
+  mutate(`GO type` = forcats::fct_inorder(factor(`GO type`))) %>%
+  select(`GO type`, "Fold Enrichment" = "ythdf2_venncenter_genenames.bed (fold Enrichment)", `GO analysis`) %>%
+  mutate(`DF2 Target` = "m6A-Modified")
+
+
+
+combined_go_exclusive <- rbind(molec_exclusive, biol_exclusive, comp_exclusive, path_exclusive) %>%
+  mutate(`GO type` = gsub("\\(P[0-9]*\\)", "", `GO type`)) %>%
+  mutate(`GO type` = gsub("\\(GO:[0-9]*\\)", "", `GO type`)) %>%
+  arrange(`GO analysis`, desc(`ythdf2_vennexclusive_genenames.bed (fold Enrichment)`)) %>%
+  mutate(`GO type` = paste(`GO type`, "(Fold Enrich. =  ", `ythdf2_vennexclusive_genenames.bed (fold Enrichment)`, ")")) %>%
+  mutate(`GO type` = forcats::fct_inorder(factor(`GO type`))) %>%
+  select(`GO type`, "Fold Enrichment" = "ythdf2_vennexclusive_genenames.bed (fold Enrichment)", `GO analysis`) %>%
+  mutate(`DF2 Target` = "Un-Modified")
+
+
+combined_go <- rbind(combined_go_center, combined_go_exclusive) %>%
+  mutate(`Fold Enrichment` = log2(as.numeric(`Fold Enrichment`)))
+
+cbPalette <- c("#ef8a62", "#67a9cf")
+
+
+ggplot(combined_go, aes(x = `GO type`, y = `Fold Enrichment`, fill = `DF2 Target`)) +
+  geom_bar(stat = 'identity', width=0.7, alpha = 0.7) +
+  #geom_hline(yintercept = 1, alpha = 0.6, color = "grey", size = 2) +
+  coord_flip() +
+  scale_fill_manual(values=cbPalette) +
+  #geom_text(aes(label = `GO type`, y = 0, hjust = 0), size = 3.2) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 10, angle = 45),
+        axis.text.y = element_text(size = 8),
+        axis.title.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        strip.text.y = element_text(size = 12),
+        strip.text.x = element_text(size = 12)) +
+  labs(y = "Fold Enrichment", title = "GO analysis of YTHDF2 m6A-sites") +
+  facet_wrap(~`GO analysis`, ncol = 2, scales = "free_y")
+
+#ggsave(here("Figures/CHIKV_GO_030519.pdf"))
+```
+
+
+
+
+
+
+
+
+
+
+
