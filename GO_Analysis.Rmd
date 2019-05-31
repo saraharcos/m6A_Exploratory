@@ -115,7 +115,7 @@ ggplot(combined_go, aes(x = `GO type`, y = `Fold Enrichment`, fill = `DF2 Target
   labs(y = "Fold Enrichment", title = "GO analysis of YTHDF2 m6A-sites") +
   facet_wrap(~`GO analysis`, ncol = 2, scales = "free_y")
 
-#ggsave(here("Figures/CHIKV_GO_030519.pdf"))
+ggsave(here("Figures", "GO_Analysis_053119.pdf"))
 ```
 
 
