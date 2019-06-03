@@ -1,29 +1,37 @@
 #!/bin/bash
+
+echo ""
+echo "Step 0: Ensure that m6A peaks are unique"
+
+cat Peak\ files/m6A_peaks_hg19.bed | sort | uniq > temp.bed
+
+mv temp.bed Peak\ files/m6A_peaks_hg19.bed
+
 echo ""
 echo "Step 1: Intersect to find overlapping peaks from ythdf2 angle"
 
-bedtools intersect -wa -a Peak\ files/ythdf2_peaks_final2.bed -b Peak\ files/m6a_peaks_hg19.bed | uniq > Overlap\ beds/ythdf2_venncenter.bed
+bedtools intersect -wa -a Peak\ files/ythdf2_peaks_final2.bed -b Peak\ files/m6a_peaks_hg19.bed | sort | uniq > Overlap\ beds/ythdf2_venncenter.bed
 
 wc -l Overlap\ beds/ythdf2_venncenter.bed
 
 echo ""
 echo "Step 2: Intersect to find overlapping peaks from m6a angle"
 
-bedtools intersect -wa -a Peak\ files/m6a_peaks_hg19.bed -b Peak\ files/ythdf2_peaks_final2.bed | uniq > Overlap\ beds/m6a_venncenter.bed
+bedtools intersect -wa -a Peak\ files/m6a_peaks_hg19.bed -b Peak\ files/ythdf2_peaks_final2.bed | sort | uniq > Overlap\ beds/m6a_venncenter.bed
 
 wc -l Overlap\ beds/m6a_venncenter.bed
 
 echo ""
 echo "Step 3: Intersect to find exclusive peaks from ythdf2 angle"
 
-bedtools intersect -v -a Peak\ files/ythdf2_peaks_final2.bed -b Peak\ files/m6a_peaks_hg19.bed | uniq > Overlap\ beds/ythdf2_vennexclusive.bed
+bedtools intersect -v -a Peak\ files/ythdf2_peaks_final2.bed -b Peak\ files/m6a_peaks_hg19.bed | sort | uniq > Overlap\ beds/ythdf2_vennexclusive.bed
 
 wc -l Overlap\ beds/ythdf2_vennexclusive.bed
 
 echo ""
 echo "Step 4: Intersect to find exclusive peaks from m6a angle"
 
-bedtools intersect -v -a Peak\ files/m6a_peaks_hg19.bed -b Peak\ files/ythdf2_peaks_final2.bed | uniq > Overlap\ beds/m6a_vennexclusive.bed
+bedtools intersect -v -a Peak\ files/m6a_peaks_hg19.bed -b Peak\ files/ythdf2_peaks_final2.bed | sort | uniq > Overlap\ beds/m6a_vennexclusive.bed
 
 wc -l Overlap\ beds/m6a_vennexclusive.bed
 echo ""
@@ -53,11 +61,11 @@ cut -f 1,2,3 Peak\ files/ythdf2_peaks_final2.bed > Peak\ files/ythdf2_peaks_fina
 echo "Step 6: Select gene name column for input to GO analysis"
 echo ""
 
-cut -f 5 Overlap\ beds/ythdf2_venncenter.bed | uniq > Overlap\ beds/ythdf2_venncenter_genenames.bed
+cut -f 5 Overlap\ beds/ythdf2_venncenter.bed | sort | uniq > Overlap\ beds/ythdf2_venncenter_genenames.bed
 
-cut -f 5 Overlap\ beds/ythdf2_vennexclusive.bed | uniq > Overlap\ beds/ythdf2_vennexclusive_genenames.bed
+cut -f 5 Overlap\ beds/ythdf2_vennexclusive.bed | sort | uniq > Overlap\ beds/ythdf2_vennexclusive_genenames.bed
 
-cut -f 5 Peak\ files/ythdf2_peaks_final2.bed | uniq > Peak\ files/ythdf2_peaks_final2_genenames.bed
+cut -f 5 Peak\ files/ythdf2_peaks_final2.bed | sort | uniq > Peak\ files/ythdf2_peaks_final2_genenames.bed
 
 
 

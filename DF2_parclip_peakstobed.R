@@ -78,7 +78,7 @@ ythdf2_3 <- read_xlsx(here("Input" ,"GSE49339_A-PARCLIP YTHDF2.xlsx"), 3) %>%
 #write to BED
 bed_write <- function(df, name){
   df %>%
-    select(Chromosome, ClusterStart, ClusterEnd, Name = `Gene symbol`, Peakmutation, Strand) %>%
+    select(Chromosome, ClusterStart, ClusterEnd, Name = `Gene symbol`, Peakmutation, Strand, Region) %>%
     arrange(Chromosome, ClusterStart, ClusterEnd) %>%
     write_tsv(here("Pre-processing beds", paste0(name, '.bed')),
               col_names = FALSE)
