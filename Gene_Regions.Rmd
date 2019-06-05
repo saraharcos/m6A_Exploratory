@@ -5,10 +5,10 @@ output: html_notebook
 
 
 
-```{r}
+```{r echo = FALSE, message = FALSE}
 library(tidyverse)
 library(here)
-devtools::install_github("EdwinTh/thatssorandom")
+#devtools::install_github("EdwinTh/thatssorandom")
 library(thatssorandom)
 
 ```
@@ -17,16 +17,170 @@ library(thatssorandom)
 
 
 ```{r}
-ythdf2_modified <- read_tsv(here("Overlap beds", "ythdf2_venncenter.bed"), col_names = FALSE) %>%
+ythdf2_modified <- read_tsv(here("Overlap beds", "ythdf2_venncenter.bed"), col_names = FALSE)
+
+ythdf2_modified_regions <- ythdf2_modified %>%
   select("Region" = X8)
 
-ythdf2_unmodified <- read_tsv(here("Overlap beds", "ythdf2_vennexclusive.bed"), col_names = FALSE) %>%
+ythdf2_unmodified <- read_tsv(here("Overlap beds", "ythdf2_vennexclusive.bed"), col_names = FALSE)
+
+ythdf2_unmodified_regions <- ythdf2_unmodified %>%
   select("Region" = X8)
 
-ythdf2 <- bind_rows("Modified" = ythdf2_modified, "Unmodified" = ythdf2_unmodified, .id = "Group") %>%
+ythdf2 <- bind_rows("Modified" = ythdf2_modified_regions, "Unmodified" = ythdf2_unmodified_regions, .id = "Group") %>%
   separate_rows(Region, sep = ",")
 
 #ggploting
 ggmm(ythdf2, Group, Region)
 ```
+
+
+##Venn diagram of gene names in modified versus unmodified
+
+```{r}
+ythdf2_modified_names <- ythdf2_modified %>%
+  select("Gene" = X5) %>%
+  separate_rows(Gene, sep = ",") %>%
+  unique()
+
+ythdf2_unmodified_names <- ythdf2_unmodified %>%
+  select("Gene" = X5) %>%
+  separate_rows(Gene, sep = ",") %>%
+  unique()
+```
+
+##What I should do is get the m6A gene names, and start from there
+
+```{r}
+m6A_genes <- read_tsv(here("Peak files", "m6A_genes_hg19.bed"), col_names = FALSE, skip = 2) %>%
+  select("Gene" = X5) %>%
+  separate_rows(Gene, sep = ",") %>%
+  unique()
+
+print(paste("Number of all m6A genes: ", n_distinct(m6A_genes$Gene)))
+
+ythdf2_genes <- read_tsv(here("Peak files", "ythdf2_peaks_final2.bed"), col_names = FALSE, skip = 2) %>%
+  select("Gene" = X5) %>%
+  separate_rows(Gene, sep = ",") %>%
+  unique()
+
+print(paste("Number of all ythdf2 genes: ", n_distinct(ythdf2_genes$Gene)))
+
+ythdf2_m6A <- ythdf2_genes %>%
+  filter(Gene %in% m6A_genes$Gene)
+
+print(paste("Number of all ythdf2 genes in m6A: ", n_distinct(ythdf2_m6A$Gene)))
+
+ythdf2_no_m6A <- ythdf2_genes %>%
+  filter(!(Gene %in% m6A_genes$Gene))
+
+print(paste("Number of all ythdf2 genes not in m6A: ", n_distinct(ythdf2_no_m6A$Gene)))
+
+write_tsv(ythdf2_m6A, here("GO files", "ythdf2_m6A_gotest.tsv"), col_names = FALSE)
+
+write_tsv(ythdf2_no_m6A, here("GO files", "ythdf2_no_m6A_gotest.tsv"), col_names = FALSE)
+```
+
+
+##There are more genes in the list of overlap from peaks.
+  - Perhaps some peaks were from genes in non-m6A ythdf2 and non-ythdf2 m6a datasets, where the peaks didn't overlap but the genes did.
+  - Testing this hypothesis below:
+```{r}
+  ythdf2_nom6A_peakgenes_only <- ythdf2_unmodified %>%
+  select("Gene" = X5) %>%
+  separate_rows(Gene, sep = ",") %>%
+  unique()
+
+print(paste("Number of all ythdf2 genes from peaks not in m6A: ", n_distinct(ythdf2_nom6A_peakgenes_only$Gene)))
+
+questionable_genes <- ythdf2_nom6A_peakgenes_only %>%
+  filter(!(Gene %in% ythdf2_no_m6A$Gene))
+
+print(paste("Number of questionable genes: ", n_distinct(questionable_genes$Gene)))
+```
+  - Are these genes all in the m6A dataset?
+  
+```{r}
+questionable_inm6A <- questionable_genes %>%
+  filter(Gene %in% m6A_genes$Gene)
+
+print(paste("Number of questionable genes in m6A genes: ", n_distinct(questionable_inm6A$Gene)))
+```
+  - So, there were 1271 genes that were in the peak-defined unmodified, but not in the gene-defined unmodified. And 1270 of these genes are in the m6A-genes dataset.
+  - This confirms that some genes did not have shared peaks between ythdf2 and m6A, but did have shared Genes. 
+  - What is the 1 leftover gene?
+  
+```{r}
+leftover_gene <- questionable_genes %>%
+  filter(!(Gene %in% m6A_genes$Gene))
+
+print(leftover_gene)
+```
+  ##Summary
+    - There was a discrepancy between the number of genes in the ythdf2 unmodified dataset, based on whether I filtered at the gene level, or filtered at the peak level and then defined genes from there. This is because some genes had ythdf2 peaks that were both modified and unmodified. This was 1270 genes. In the future for GO analysis, it probably makes the most sense to use the gene-level filtering, that way we are looking at fully unmodified transcripts. Later analyses can look at the location of the modifications in genes that were both modified and unmodified. Actually- I will do this analysis, looking at peak location in 3 sets of ythdf2 targets:
+      1. YTHDF2 target genes where all peaks are m6A modified
+      2. YTHDF2 target genes where all peaks are unmodified
+      3. YTHDF2 target genes with mixed modified and unmodified. Split these up and view regions separately.
+          a. Peaks with m6A
+          b. Peaks without m6A
+```{r fig.width = 10}
+ythdf2_modified_name_region <- ythdf2_modified %>%
+  select("Gene" = X5, "Region" = X8)
+
+ythdf2_unmodified_name_region <- ythdf2_unmodified %>%
+  select("Gene" = X5, "Region" = X8)
+
+set_one <- ythdf2_modified_name_region %>%
+  filter(!(Gene %in% ythdf2_unmodified_name_region$Gene))
+  
+set_two <- ythdf2_unmodified_name_region %>%
+  filter(!(Gene %in% ythdf2_modified_name_region$Gene))
+  
+set_three_a <- ythdf2_modified_name_region %>%
+  filter(Gene %in% ythdf2_unmodified_name_region$Gene)
+
+set_three_b <- ythdf2_unmodified_name_region %>%
+  filter(Gene %in% ythdf2_modified_name_region$Gene)
+  
+
+all_sets <- bind_rows("YTHDF2 m6A whole gene" = set_one, "YTHDF2 no m6A whole gene" = set_two,
+                      "YTHDF2 mixed (m6A)" = set_three_a, "YTHDF2 mixed (no m6A)" = set_three_b,
+                      .id = "Group") %>%
+  separate_rows(Region, sep = ",")
+
+#ggploting
+ggmm(all_sets, Group, Region) +
+    xlab(label = NULL) +
+    theme(axis.text.x = element_text(size = 10, angle = 10, hjust = 0.001)) +
+    scale_x_discrete(position = "top") 
+  
+```
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
