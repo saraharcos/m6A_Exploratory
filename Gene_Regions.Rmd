@@ -120,21 +120,35 @@ print(leftover_gene)
     - There was a discrepancy between the number of genes in the ythdf2 unmodified dataset, based on whether I filtered at the gene level, or filtered at the peak level and then defined genes from there. This is because some genes had ythdf2 peaks that were both modified and unmodified. This was 1270 genes. In the future for GO analysis, it probably makes the most sense to use the gene-level filtering, that way we are looking at fully unmodified transcripts. Later analyses can look at the location of the modifications in genes that were both modified and unmodified. Actually- I will do this analysis, looking at peak location in 3 sets of ythdf2 targets:
       1. YTHDF2 target genes where all peaks are m6A modified
       2. YTHDF2 target genes where all peaks are unmodified
+          a. YTHDF2 target genes that do not contain any m6A modifications on the whole gene.
       3. YTHDF2 target genes with mixed modified and unmodified. Split these up and view regions separately.
           a. Peaks with m6A
           b. Peaks without m6A
 ```{r fig.width = 10}
 ythdf2_modified_name_region <- ythdf2_modified %>%
-  select("Gene" = X5, "Region" = X8)
+  select("Gene" = X5, "Region" = X8) %>%
+  separate_rows(Gene, sep = ",")
 
 ythdf2_unmodified_name_region <- ythdf2_unmodified %>%
-  select("Gene" = X5, "Region" = X8)
+  select("Gene" = X5, "Region" = X8) %>%
+  separate_rows(Gene, sep = ",")
 
 set_one <- ythdf2_modified_name_region %>%
-  filter(!(Gene %in% ythdf2_unmodified_name_region$Gene))
+  filter(!(Gene %in% ythdf2_unmodified_name_region$Gene)) %>%
+  filter(Gene %in% m6A_genes$Gene)
+
+test <- ythdf2_modified_name_region %>%
+  filter(!(Gene %in% ythdf2_unmodified_name_region$Gene)) %>%
+  filter(!(Gene %in% m6A_genes$Gene)) %>%
+  select(Gene) %>%
+  unique()
   
 set_two <- ythdf2_unmodified_name_region %>%
-  filter(!(Gene %in% ythdf2_modified_name_region$Gene))
+  filter(!(Gene %in% ythdf2_modified_name_region$Gene)) %>%
+  filter(Gene %in% m6A_genes$Gene)
+
+set_two_a <- set_two %>%
+  filter(!(Gene %in% m6A_genes$Gene))
   
 set_three_a <- ythdf2_modified_name_region %>%
   filter(Gene %in% ythdf2_unmodified_name_region$Gene)
@@ -143,8 +157,9 @@ set_three_b <- ythdf2_unmodified_name_region %>%
   filter(Gene %in% ythdf2_modified_name_region$Gene)
   
 
-all_sets <- bind_rows("YTHDF2 m6A whole gene" = set_one, "YTHDF2 no m6A whole gene" = set_two,
-                      "YTHDF2 mixed (m6A)" = set_three_a, "YTHDF2 mixed (no m6A)" = set_three_b,
+all_sets <- bind_rows("aYTHDF2 m6A total overlap" = set_one,
+                      "bYTHDF2 mixed (m6A)" = set_three_a, "cYTHDF2 mixed (no m6A)" = set_three_b,
+                       "dYTHDF2 no overlap but gene has m6A" = set_two, "eYTHDF2 gene has no m6A peaks" = set_two_a,
                       .id = "Group") %>%
   separate_rows(Region, sep = ",")
 
@@ -157,9 +172,73 @@ ggmm(all_sets, Group, Region) +
 ```
 
       
+##Now, we make sure the total number of genes adds up to the total YTHDF2 genes.
+  - The write to file to perform GO analysis. 3 files, whole m6A, whole non-m6A, and mixed
+  - Also make a marimekko with the "mixed" category combined
+  
+```{r}
+set_three <- rbind(set_three_a, set_three_b)
 
+all_sets_three_combined <- bind_rows("YTHDF2 m6A whole gene" = set_one, "YTHDF2 no m6A overlap combined" = rbind(set_two, set_two_a),
+                      "YTHDF2 mixed" = set_three, .id = "Group") %>%
+  separate_rows(Region, sep = ",")
 
+ggmm(all_sets_three_combined, Group, Region) +
+    xlab(label = NULL) +
+    theme(axis.text.x = element_text(size = 10)) +
+    scale_x_discrete(position = "top") 
 
+set_one %>%
+  select(Gene) %>%
+  unique() %>%
+  write_tsv(here("GO Files", "ythdf2_m6a_wholegene.tsv"))
+
+set_two %>%
+  select(Gene) %>%
+  unique() %>%
+  write_tsv(here("GO Files", "ythdf2_no_m6a_wholegene.tsv"))
+
+set_three %>%
+  select(Gene) %>%
+  unique() %>%
+  write_tsv(here("GO Files", "ythdf2_m6a_mixedgene.tsv"))
+
+#Keep track of sums:
+
+set_one %>%
+  select(Gene) %>%
+  unique() %>%
+  n_distinct()
+
+set_two %>%
+  select(Gene) %>%
+  unique() %>%
+  n_distinct()
+
+set_two_a %>%
+  select(Gene) %>%
+  unique() %>%
+  n_distinct()
+
+set_three %>%
+  select(Gene) %>%
+  n_distinct()
+
+ythdf2_genes %>%
+  filter(!(Gene %in% all_sets_three_combined$Gene)) %>%
+  n_distinct()
+
+all_sets_three_combined %>%
+  select(Gene) %>%
+  n_distinct
+
+all_sets_three_combined %>%
+  filter(!(Gene %in% ythdf2_genes$Gene))
+```
+  
+##Are there really 2500 genes were all YTHDF2 peaks are overlapped by a m6A peak?
+
+  - Homer mergePeaks provides the "average" position, suggesting the peaks will be smaller than merging with bedtools. I will pause here in R, and try to run the data through homer on the big computer.
 
 
 
