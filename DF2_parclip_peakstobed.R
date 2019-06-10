@@ -78,7 +78,7 @@ ythdf2_3 <- read_xlsx(here("Input" ,"GSE49339_A-PARCLIP YTHDF2.xlsx"), 3) %>%
 #write to BED
 bed_write <- function(df, name){
   df %>%
-    select(Chromosome, ClusterStart, ClusterEnd, Name = `Gene symbol`, Peakmutation, Strand, Region) %>%
+    select(Chromosome, ClusterStart, ClusterEnd, Name = `Gene symbol`, Peakmutation, Strand) %>%
     arrange(Chromosome, ClusterStart, ClusterEnd) %>%
     write_tsv(here("Pre-processing beds", paste0(name, '.bed')),
               col_names = FALSE)
@@ -113,6 +113,43 @@ bed_write(ythdf2_3_peaks, "ythdf2_rep3_bygene")
 
 
 
+#Testing overlap analysis using bioconductor ranges. Inspired and adapted from ro-che.info/articles/2018-07-11-chip-seq-consensus
+library(rtracklayer)
+library(GenomicRanges)
+peak_files <- list.files(path = here("Pre-processing beds"), pattern = "bygene")
+peak_files <- paste0(here("Pre-processing beds"), "/", peak_files)
+peak_files
+
+peak_granges <- lapply(peak_files, import)
+peak_granges
+
+peak_grangeslist <- GRangesList(peak_granges)
+peak_grangeslist
+
+peak_coverage <- coverage(peak_grangeslist)
+peak_coverage
+
+#Add coverage by strand
+pcvg <- coverage(peak_grangeslist[strand(peak_grangeslist) == "+"])
+mcvg <- coverage(peak_grangeslist[strand(peak_grangeslist) == "-"])
+
+pcovered_ranges <- IRanges::slice(pcvg, lower = 2, rangesOnly = T)
+mcovered_ranges <- IRanges::slice(mcvg, lower = 2, rangesOnly = T)
+
+pcovered_granges <- GRanges(pcovered_ranges)
+mcovered_granges <- GRanges(mcovered_ranges)
+
+strand(pcovered_granges) = "+"
+strand(mcovered_granges) = "-"
+
+#merge peaks that are no more than 1bp apart
+preduced <- IRanges::reduce(pcovered_granges, min.gapwidth = 2)
+mreduced <- IRanges::reduce(mcovered_granges, min.gapwidth = 2)
+all_granges <- c(preduced, mreduced)
+all_granges
+all_granges[width(all_granges) > 1]
+
+#Now repeat with m6A (doing it in this script for now so I can easily count overlaps without writing to file)
 
 
 
